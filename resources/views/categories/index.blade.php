@@ -1,28 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des catégories</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-5">
-    <h1 class="mb-4">Liste des catégories</h1>
-    <a href="/categories/create" class="btn btn-primary mb-3">Ajouter une nouvelle catégorie</a>
-    <ul class="list-group">
+@extends('layouts.app')
+
+@section('content')
+<div class="container mx-auto py-8 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-center text-violet-700 dark:text-white mb-6">Liste des catégories</h1>
+    <a href="/categories/create" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mb-4 inline-block">
+        Ajouter une nouvelle catégorie
+    </a>
+
+    <ul class="list-none divide-y divide-gray-200 dark:divide-gray-700">
         @foreach ($categories as $category)
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ $category->name }}
-            <div>
-                <a href="/categories/{{ $category->id }}/edit" class="btn btn-warning btn-sm">Modifier</a>
-                <form action="/categories/{{ $category->id }}" method="POST" class="d-inline">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+        <li class="flex justify-between items-center p-4 hover:bg-gray-200 dark:hover:bg-gray-600">
+            <span class="text-lg font-medium text-gray-800 dark:text-white">{{ $category->name }}</span>
+            <div class="flex space-x-2">
+                <a href="/categories/{{ $category->id }}/edit" class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded text-sm font-medium">
+                    Modifier
+                </a>
+                <form action="/categories/{{ $category->id }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white py-1 px-3 rounded text-sm font-medium">
+                        Supprimer
+                    </button>
                 </form>
             </div>
         </li>
         @endforeach
     </ul>
-</body>
-</html>
+</div>
+@endsection

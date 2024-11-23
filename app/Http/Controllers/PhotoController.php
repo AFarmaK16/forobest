@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Models\Photo;
+use  App\Models\Category;
 
 class PhotoController extends Controller
 {
@@ -45,5 +46,11 @@ class PhotoController extends Controller
     {
         $photo->delete();
         return redirect()->route('photos.index')->with('success', 'Photo supprimée.');
+    }
+    //Details photo
+    public function details(Photo $photo)
+    {
+        // Return the view with the photo's details
+        return view('photos.details', compact('photo'));
     }
 }

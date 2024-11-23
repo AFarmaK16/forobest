@@ -1,33 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publier une photo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-5">
-    <h1 class="mb-4">Publier une nouvelle photo</h1>
-    <form action="/photos" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <div class="mb-3">
-            <label for="category" class="form-label">Catégorie :</label>
-            <select id="category" name="category_id" class="form-select">
-                @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Titre :</label>
-            <input type="text" id="title" name="title" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="url" class="form-label">Lien de l'image :</label>
-            <input type="url" id="url" name="url" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-success">Publier</button>
-        <a href="/photos" class="btn btn-secondary">Retour</a>
-    </form>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+
+<div class="container mx-auto px-4 py-8">
+
+  <h1 class="text-2xl font-bold mb-4">Publier une nouvelle photo</h1>
+  <form action="/photos" method="POST" class="space-y-4">
+    @csrf
+    <div class="flex flex-col">
+      <label for="category" class="text-gray-700 font-medium mb-2">Catégorie :</label>
+      <select id="category" name="category_id" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1">
+        @foreach ($categories as $category)
+          <option value="{{ $category->id }}">{{ $category->name }}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="flex flex-col">
+      <label for="title" class="text-gray-700 font-medium mb-2">Titre :</label>
+      <input type="text" id="title" name="title" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1" required>
+    </div>
+    <div class="flex flex-col">
+      <label for="url" class="text-gray-700 font-medium mb-2">Lien de l'image :</label>
+      <input type="url" id="url" name="url" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1" required>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 1  focus:ring-green-700">Publier</button>
+      <a href="/photos" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Retour</a>
+    </div>
+  </form>
+
+</div>
+
+@endsection

@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Clé étrangère vers la table users
-            $table->unsignedBigInteger('category_id'); // Clé étrangère vers la table categories
-            $table->string('title'); // Titre de la photo
-            $table->string('url'); // URL ou chemin de la photo
-            $table->timestamps();
-    
-            // Contraintes
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
+            $table->string('title');
+            $table->string('url')->nullable();  // Allow null values for 'url'
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->timestamps();
+            
         });
     }
 

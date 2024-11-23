@@ -19,7 +19,7 @@ class CommentController extends Controller
             ]);
     
             Comment::create($request->all());
-            return back()->with('success', 'Commentaire ajouté.');
+            return redirect()->back()->with('success', 'Commentaire ajouté avec succès.');            
         }
     
         // Ajouter une réponse à un commentaire

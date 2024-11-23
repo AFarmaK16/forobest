@@ -19,5 +19,13 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
+    // Create an artiste user
+        User::create([
+            'name' => 'Artiste',
+            'email' => 'artiste@example.com',
+            'password' => bcrypt('password'),
+            'role' => 'artiste',
+        ]);
+        
     }
 }

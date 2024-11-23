@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de la photo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-5">
-    <h1>{{ $photo->title }}</h1>
-    <img src="{{ $photo->url }}" class="img-fluid mb-4" alt="{{ $photo->title }}">
-    <p><strong>Catégorie :</strong> {{ $photo->category->name }}</p>
+@extends('layouts.app')
 
-    <h3>Commentaires :</h3>
-    <ul class="list-group mb-4">
-        @foreach ($photo->comments as $comment)
-        <li class="list-group-item">
-            <strong>{{ $comment->name }}</strong>: {{ $comment->message }}
+@section('content')
+
+  <div class="container mx-auto px-4 py-8 bg-gray-100 rounded-lg shadow-md">
+
+    <h1 class="text-3xl font-bold mb-4 text-violet-700">{{ $photo->title }}</h1>
+    <img src="{{ $photo->url }}" class="w-full rounded-lg mb-4" alt="{{ $photo->title }}">
+    <p class="text-gray-600"><strong>Catégorie :</strong> {{ $photo->category->name }}</p>
+
+    <h3 class="text-2xl font-bold mb-4 text-violet-700">Commentaires :</h3>
+    <ul class="list-group list-group-flush mb-8">
+      @foreach ($photo->comments as $comment)
+        <li class="list-group-item py-3 px-4 border-b border-gray-300">
+          <strong class="text-gray-800">{{ $comment->name }}</strong>: {{ $comment->message }}
         </li>
-        @endforeach
+      @endforeach
     </ul>
 
-    <h3>Ajouter un commentaire :</h3>
-    <form action="/photos/{{ $photo->id }}/comments" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <div class="mb-3">
-            <input type="text" name="name" class="form-control" placeholder="Votre nom" required>
-        </div>
-        <div class="mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Votre email" required>
-        </div>
-        <div class="mb-3">
-            <textarea name="message" class="form-control" placeholder="Votre message" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+    <h3 class="text-2xl font-bold mb-4 text-violet-700">Ajouter un commentaire :</h3>
+    <form action="{{ route('comments.store', $photo->id) }}" method="POST" class="space-y-4">
+      @csrf
+      <div class="flex flex-col">
+        <label for="name" class="text-gray-700 font-medium mb-2">Votre nom</label>
+        <input type="text" name="name" id="name" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1" required>
+      </div>
+      <div class="flex flex-col">
+        <label for="email" class="text-gray-700 font-medium mb-2">Votre email</label>
+        <input type="email" name="email" id="email" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1" required>
+      </div>
+      <div class="flex flex-col">
+        <label for="message" class="text-gray-700 font-medium mb-2">Votre message</label>
+        <textarea name="message" id="message" class="shadow-sm rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-blue-500 focus:ring-1 h-24" required></textarea>
+      </div>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700">Envoyer</button>
     </form>
-</body>
-</html>
+  </div>
+
+@endsection

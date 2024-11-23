@@ -14,23 +14,40 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+    <body class="font-sans antialiased bg-gray-100 text-gray-900">
+        <!-- Full Page Container -->
+        <div class="min-h-screen flex flex-col">
+            <!-- Navigation -->
+            <header class="bg-white shadow dark:bg-gray-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    @include('layouts.navigation')
+                </div>
+            </header>
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <div class="bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                            {{ $header }}
+                        </h1>
                     </div>
-                </header>
+                </div>
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="flex-grow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    @yield('content')
+                </div>
             </main>
+
+            <!-- Footer -->
+            <footer class="bg-white border-t dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">© {{ now()->year }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
